@@ -1,0 +1,101 @@
+<mat-card [@moltenAnimation]>
+    <mat-card-content>
+        <mat-card-title>
+            Editar Usuario
+        </mat-card-title>
+        <mat-card-subtitle class="obligatorio">
+            * Campos obligatorios
+        </mat-card-subtitle>
+        <form [formGroup]="formUpdate" (ngSubmit)="onSubmit()">
+            <input type="hidden" name="id" [formControl]="formUpdate.controls['id']">
+            <div fxLayout="row wrap">
+                <div class="p-10" fxFlex="100">
+                    <mat-form-field>
+                        <input matInput placeholder="*Correo electrónico" [formControl]="formUpdate.controls['correo']" (paste)="onEmailPaste()" autocomplete="off">
+                    </mat-form-field>
+                    <mat-hint *ngIf="formUpdate.controls['correo'].hasError('required') && formUpdate.controls['correo'].touched" class="text-danger font-14">
+                        <div class="error">Por favor, ingrese el correo.</div>
+                    </mat-hint>
+                    <mat-hint *ngIf="formUpdate.controls['correo'].errors?.email && formUpdate.controls['correo'].touched" class="text-danger font-14">
+                        <div class="error">Por favor, ingrese el correo correctamente.</div>
+                    </mat-hint>
+                    <mat-hint *ngIf="formUpdate.controls['correo'].hasError('existsUser') && formUpdate.controls['correo'].touched" class="text-danger font-14">
+                        <div class="error">El usuario ya se encuentra registrado.</div>
+                    </mat-hint>
+                </div>
+                <div class="p-10" fxFlex.gt-sm="33" fxFlex.gt-xs="33" fxFlex="100">
+                    <mat-form-field>
+                        <input matInput placeholder="*Nombre" [formControl]="formUpdate.controls['nombre']" class="capitalize" autocomplete="off">
+                    </mat-form-field>
+                    <mat-hint *ngIf="formUpdate.controls['nombre'].hasError('required') && formUpdate.controls['nombre'].touched" class="text-danger font-14">
+                        <div class="error">Por favor, ingrese el nombre.</div>
+                    </mat-hint>
+                    <mat-hint *ngIf="(formUpdate.controls['nombre'].hasError('minlength') || formUpdate.controls['nombre'].hasError('personname')) && formUpdate.controls['nombre'].touched" class="text-danger font-14">
+                        <div class="error">Por favor, ingrese el nombre correctamente.</div>
+                    </mat-hint>
+                </div>
+                <div class="p-10" fxFlex.gt-sm="33" fxFlex.gt-xs="33" fxFlex="100">
+                    <mat-form-field>
+                        <input matInput placeholder="*Apellido Paterno" [formControl]="formUpdate.controls['paterno']" class="capitalize" autocomplete="off">
+                    </mat-form-field>
+                    <mat-hint *ngIf="formUpdate.controls['paterno'].hasError('required') && formUpdate.controls['paterno'].touched" class="text-danger font-14">
+                        <div class="error">Por favor, ingrese el apellido paterno.</div>
+                    </mat-hint>
+                    <mat-hint *ngIf="(formUpdate.controls['paterno'].hasError('minlength') || formUpdate.controls['paterno'].hasError('personname')) && formUpdate.controls['paterno'].touched" class="text-danger font-14">
+                        <div class="error">Por favor, ingrese el apellido paterno correctamente.</div>
+                    </mat-hint>
+                </div>
+                <div class="p-10" fxFlex.gt-sm="33" fxFlex.gt-xs="33" fxFlex="100">
+                    <mat-form-field>
+                        <input matInput placeholder="*Apellido Materno" [formControl]="formUpdate.controls['materno']" class="capitalize" autocomplete="off">
+                    </mat-form-field>
+                    <mat-hint *ngIf="formUpdate.controls['materno'].hasError('required') && formUpdate.controls['materno'].touched" class="text-danger font-14">
+                        <div class="error">Por favor, ingrese el apellido materno.</div>
+                    </mat-hint>
+                    <mat-hint *ngIf="(formUpdate.controls['materno'].hasError('minlength') || formUpdate.controls['materno'].hasError('personname')) && formUpdate.controls['materno'].touched" class="text-danger font-14">
+                        <div class="error">Por favor, ingrese el apellido materno correctamente.</div>
+                    </mat-hint>
+                </div>
+                <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+                    <mat-form-field>
+                        <mat-select placeholder="*Tipo de Usuario" [formControl]="formUpdate.controls['tipo_usuario']">
+                            <mat-option *ngFor="let tipo of tiposUsuarios" [value]="tipo.id">
+                                {{tipo.descripcion}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-hint *ngIf="formUpdate.controls['tipo_usuario'].hasError('required') && formUpdate.controls['tipo_usuario'].touched" class="text-danger font-14">
+                        <div class="error">Por favor, seleccione el tipo de usuario.</div>
+                    </mat-hint>
+                </div>
+                <div class="p-10" fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="100">
+                    <mat-form-field>
+                        <mat-select placeholder="*Tipo de Cliente" [formControl]="formUpdate.controls['tipo_cliente']">
+                            <mat-option *ngFor="let tipo of tiposClientes" [value]="tipo.id">
+                                {{tipo.descripcion}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-hint *ngIf="formUpdate.controls['tipo_cliente'].hasError('required') && formUpdate.controls['tipo_cliente'].touched" class="text-danger font-14">
+                        <div class="error">Por favor, seleccione el tipo de cliente.</div>
+                    </mat-hint>
+                </div>
+            </div>
+            <hr>
+            <mat-card-actions>
+                <a fxFlex="40" fxFlex.gt-sm="15" mat-raised-button color="warn" class="mat-elevation-z4" routerLink="/usuarios">
+                    <mat-icon class="horizontal-menu-icon">
+                        undo
+                    </mat-icon>
+                    Volver
+                </a>
+                <button fxFlex="40" fxFlex.gt-sm="15" mat-raised-button color="primary" class="mat-elevation-z4" type="submit" [disabled]="!formUpdate.valid">
+                    <mat-icon class="horizontal-menu-icon">
+                        save
+                    </mat-icon>
+                    Actualizar
+                </button>
+            </mat-card-actions>
+        </form>
+    </mat-card-content>
+</mat-card>
